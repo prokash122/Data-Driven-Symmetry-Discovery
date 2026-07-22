@@ -1,2 +1,4 @@
 # Data-Driven-Symmetry-Discovery
-![Alt text](All States.png)
+<p align="center">
+  <img src="All Stages.png" alt="Symmetry-Discovery Pipeline">
+</p>
