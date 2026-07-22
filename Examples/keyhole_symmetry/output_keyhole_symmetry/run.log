@@ -1,0 +1,137 @@
+Loading keyhole data from dataset_keyhole.csv...
+  Loaded: ['etaP', 'Vs', 'r0', 'alpha', 'rho', 'cp', 'Tl-T0'] -> e*
+  Samples: 90
+  Ke range: [1.543, 37.74]
+  e* range: [0.2087, 12.7727]
+
+============================================================
+Step 0: Dimensional analysis (Buckingham-Pi reduction)
+============================================================
+  Dimension matrix shape: (4, 7)  (rows = ['Mass', 'Length', 'Time', 'Temperature'], cols = ['etaP', 'Vs', 'r0', 'alpha', 'rho', 'cp', 'Tl-T0'])
+  Rank: 4   Expected Pi groups: 3
+  Using pydimension.data_preprocessing.DataPreprocessor (CSV: dataset_keyhole.csv)
+=== Data Preprocessing ===
+✅ Loaded data from: dataset_keyhole.csv
+   Shape: (90, 15)
+   Columns: ['case', 'source', 'etaP', 'Vs', 'r0', 'alpha', 'rho', 'cp', 'Tv-T0', 'Lv', 'Tl-T0', 'Lm', 'e', 'Ke', 'e*']
+✅ Detected variables:
+   Input variables (7): ['etaP', 'Vs', 'r0', 'alpha', 'rho', 'cp', 'Tl-T0']
+   Output variables (1): ['e*']
+   e*: not in matrix, assuming dimensionless
+✅ Loaded dimension matrix from file
+✅ Normalized data
+   Shape: (90, 8)
+   Value range: [0.0163, 1.0000]
+
+=== Preprocessing Complete ===
+=== Dimensional Analysis ===
+   Input variables: ['etaP', 'Vs', 'r0', 'alpha', 'rho', 'cp', 'Tl-T0']
+   Output variable: e*
+   Active dimensions: ['Mass', 'Length', 'Time', 'Temperature']
+   Matrix shape: (4, 7)
+   Matrix rank: 4
+   Variables: 7
+   Expected null space dimension: 3
+
+=== Finding Null Space ===
+Dimension matrix shape: (4, 7)
+Null space shape: (7, 3)
+
+=== Simplifying Basis Vectors ===
+Simplified basis vectors shape: (7, 3)
+
+=== Created Dimensionless Variables ===
+Number of dimensionless groups: 3
+  π1 = Vs × r0 × alpha^(-1)
+  π2 = etaP × Vs^-3 × r0^-2 × rho^(-1)
+  π3 = Vs^2 × cp^(-1) × Tl-T0^(-1)
+
+=== Dimensional Analysis Complete ===
+  Basis vectors shape (repo): (7, 3)
+    π1 = Vs × r0 × alpha^(-1)
+    π2 = etaP × Vs^-3 × r0^-2 × rho^(-1)
+    π3 = Vs^2 × cp^(-1) × Tl-T0^(-1)
+  Known Ke exponents projected onto null-space basis: cos = +1.0000  (±1 means Ke lies in the Pi-group span)
+  Reduced candidates (pi_features) shape: (90, 3)  range: [0.000, 1.000]
+  Known Ke in Pi coordinates: Ke = Pi1^0.5 · Pi2^1 · Pi3^1
+  Centred Pi values for Step 3: shape (90, 3)  range: [0.0791, 41.9]
+
+============================================================
+Step 1: Normalizing data
+============================================================
+  --pi-only: Step 2 input = 3 dimensionless features; Step 3 input = 3 geometric-mean-centred Pi values
+  X_raw range: [0.000, 1.000]
+  X_pi  range: [0.000, 1.000]
+
+============================================================
+Step 2: Discovering intrinsic latent dimension
+============================================================
+  --pi-only: Step 2 encoder input = 3 dimensionless features (no [X, X², log|X|] augmentation)
+  Multilayer encoder hidden dims: [64, 32]
+  Multi-layer encoder: [64, 32]
+  raw_input=True: [X, X², log|X|] augmentation is disabled
+
+  Optimal latent dimension: 1
+    k=1: R2_train=0.9821, R2_test=0.9820, MSE=0.001108
+    k=2: R2_train=0.9853, R2_test=0.9795, MSE=0.001263
+    k=3: R2_train=0.9840, R2_test=0.9797, MSE=0.001247
+    k=4: R2_train=0.9840, R2_test=0.9794, MSE=0.001270
+
+============================================================
+Step 3: Identifying symmetry type
+============================================================
+  Running Step 3 on the 3 geometric-mean-centred Pi VALUES (not the log-min-max Step 2 features).
+  Centring is purely multiplicative, so the scaling encoder's internal log sees centred log-Pi coordinates —
+  no log-of-log degeneracy, and generators live in dimensionless Pi space.
+
+  Detected symmetry: scaling
+    scaling        : 0.001342 <--
+    translational  : 0.027715
+    rotational     : 0.030071
+  Loss gap: 20.7x
+
+============================================================
+Step 4: Extracting Lie-algebra generators
+============================================================
+  Symmetry type: scaling
+  Generators: 2
+
+  Encoder row 1 (L2-n): Pi1:+0.369, Pi2:+0.667, Pi3:+0.647
+  cos<row, Ke Pi-exponents [0.5 1.  1. ]> = +0.9992  (±1 = the encoder rediscovered Ke)
+
+============================================================
+Step 5: Physical interpretation of generators
+============================================================
+  Each generator is a direction in log-Pi space along which e* is preserved.
+  Simultaneously rescaling the Pi groups along g leaves the keyhole physics invariant.
+
+  Generator 1:
+    Pi1 x exp(-0.667*eps), Pi2 x exp(+0.675*eps), Pi3 x exp(-0.315*eps)
+    Meaning: increase Pi2 while decrease Pi1, decrease Pi3
+             to keep Ke (and e*) unchanged
+
+  Generator 2:
+    Pi1 x exp(-0.647*eps), Pi2 x exp(-0.315*eps), Pi3 x exp(+0.694*eps)
+    Meaning: increase Pi3 while decrease Pi1, decrease Pi2
+             to keep Ke (and e*) unchanged
+
+
+============================================================
+Creating visualizations
+============================================================
+/home/user/PyDimension/projects/20260912_Stage1_Prokash/Examples/keyhole_symmetry/discover_symmetry.py:609: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  plt.tight_layout(rect=[0, 0, 1, 0.93])
+Pi candidates figure saved to output_keyhole_symmetry/keyhole_pi_candidates.png
+Figure saved to output_keyhole_symmetry/keyhole_symmetry_discovery.png
+/home/user/PyDimension/projects/20260912_Stage1_Prokash/Examples/keyhole_symmetry/discover_symmetry.py:760: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  plt.tight_layout(rect=[0, 0.05, 1, 0.95])
+Discovered-law & generators figure saved to output_keyhole_symmetry/keyhole_discovered_law_generators.png
+
+============================================================
+COMPLETE
+============================================================
+  Symmetry: scaling
+  Generators: 2
+  These generators show how the dimensionless Pi groups can be
+  simultaneously rescaled while preserving Ke and e*.
+
