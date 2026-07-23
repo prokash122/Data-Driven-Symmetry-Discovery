@@ -178,7 +178,9 @@ The generators are the **null-space of W** — there are `3 − 1 = 2` generator
 
 Each generator `g` is a 3-vector: simultaneously rescaling Pi group `k` by
 `exp(ε·gₖ)` for any `ε` leaves `e*` unchanged.
-
+<p align="center">
+  <img src="keyhole_svd_breakdown.png">
+</p>
 ---
 
 ### Step 5 — Physical Interpretation
