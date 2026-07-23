@@ -223,7 +223,12 @@ standalone publication figure
 the green translational bar against the two orange runners-up.
 
 ### 5.3 Generators
-
+<p align="center">
+  <img src="concrete_svd_breakdown.png">
+</p>
+<p align="center">
+  <img src="concrete_svd_basis.png">
+</p>
 With `n = 8` dimensionless features and `k = 5` latent directions, there
 are `n − k = 3` translational generators (components with `|g_j| > 0.05`
 shown, GPU reference run):
