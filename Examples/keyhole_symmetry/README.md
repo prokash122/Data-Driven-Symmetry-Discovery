@@ -184,9 +184,11 @@ Each generator `g` is a 3-vector: simultaneously rescaling Pi group `k` by
 ### Step 5 — Physical Interpretation
 
 **Actual generators (Pi space):**
+
 <p align="center">
-  <img src="keyhole_svd_basis.png" alt="Symmetry-Discovery Pipeline">
+  <img src="keyhole_svd_basis.png">
 </p>
+
 | Generator | Trade-off | Physical meaning |
 |---|---|---|
 | 1 | `π1` × exp(−0.67ε), `π2` × exp(+0.67ε), `π3` × exp(−0.32ε) | Lower Péclet number offset by a higher power/kinetic ratio |
