@@ -100,8 +100,8 @@ No prior work combines **all** of:
    rotational, selected by held-out loss), →
 4. generator extraction **in Π-space**, so every invariance is
    dimensionally consistent by construction, →
-5. demonstrated under one protocol across five distinct physical systems
-   (keyhole, concrete, LHC dijets, LPBF porosity, porous-media LBM).
+5. demonstrated under one protocol across four distinct physical systems
+   (keyhole, concrete, LHC dijets, porous-media LBM).
 
 ### 3.1 The three-type unification (a real mechanism, not just coverage)
 
